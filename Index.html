@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Animation</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+        .wrapper {
+            background: #ffffff;
+        }
+
+        svg {
+            font-family: "Russo One", sans-serif;
+            width: 100%;
+            height: 100%;
+            margin-top: 0%;
+        }
+
+        svg text {
+            animation: stroke 5s infinite alternate;
+            stroke-width: 2;
+            stroke: #ff246d;
+            font-size: 100px;
+        }
+
+        @keyframes stroke {
+            0% {
+                fill: rgba(255, 36, 109, 0);
+                stroke: rgba(255, 36, 109, 1);
+                stroke-dashoffset: 25%;
+                stroke-dasharray: 0 50%;
+                stroke-width: 2;
+            }
+
+            70% {
+                fill: rgba(255, 36, 109, 0);
+                stroke: rgba(255, 36, 109, 1);
+            }
+
+            80% {
+                fill: rgba(255, 36, 109, 0);
+                stroke: rgba(255, 36, 109, 1);
+                stroke-width: 2;
+            }
+
+            100% {
+                fill: rgba(255, 36, 109, 0);
+                stroke: rgba(255, 36, 109, 1);
+                stroke-dashoffset: -25%;
+                stroke-dasharray: 50% 0;
+                stroke-width: 0;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            svg text {
+                font-size: 35px;
+            }
+        }
+
+        @media only screen and (min-width: 760px) {
+            #myInput {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <svg>
+        <text x="50%" y="50%" text-anchor="middle" dy=".35em" id="nameanimation"> Type text in the text box
+        </text>
+    </svg>
+</div>
+<input type="text" id="myInput" placeholder="Your text here.....">
+<script>
+    function changetext() {
+        const myInput = document.getElementById("myInput").value;
+        document.getElementById("nameanimation").innerHTML = myInput;
+    }
+
+    const text = document.getElementById('nameanimation');
+    const myInput = document.getElementById('myInput');
+    let typedText = '';
+
+    // Listen for keydown events
+    document.addEventListener('keydown', event => {
+        const key = event.key;
+        if (key === 'Backspace' && event.shiftKey) {
+            // If Shift + Backspace keys are pressed, clear the typed text
+            typedText = '';
+            text.innerHTML = typedText;
+        } else if (key === 'Backspace') {
+            // If Backspace key is pressed, remove the last character from typedText
+            typedText = typedText.slice(0, -1);
+            // Update the text element with the updated typed text
+            text.innerHTML = typedText;
+        } else if ((key >= 'a' && key <= 'z') || (key >= '0' && key <= '9')) {
+            // Append the pressed key to the typedText variable
+            typedText += key;
+            // Update the text element with the typed text
+            text.innerHTML = typedText;
+        }
+    });
+
+    // Listen for input changes in the input field
+    myInput.addEventListener('input', () => {
+        // Update the typedText variable with the input value
+        typedText = myInput.value;
+        // Update the text element with the typed text
+        text.innerHTML = typedText;
+    });
+</script>
+</body>
+</html>
